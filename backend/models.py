@@ -26,3 +26,30 @@ class StoryCluster(Base):
 
 class Narrative(Base):
     __tablename__ = "narratives"
+
+    id = Column(String, primary_key=True, index=True)
+    storyId = Column(String, ForeignKey("story_clusters.id"))
+    title = Column(String)
+    summary = Column(String)
+    sources = Column(JSON)
+    sentiment = Column(String)
+    confidence = Column(Float)
+    articleCount = Column(Integer)
+
+    story = relationship("StoryCluster", back_populates="narratives")
+
+class Contradiction(Base):
+    __tablename__ = "contradictions"
+
+    id = Column(String, primary_key=True, index=True)
+    storyId = Column(String, ForeignKey("story_clusters.id"))
+    score = Column(Integer)
+    explanation = Column(String)
+    claimA = Column(JSON) # {text: string, sources: [], confidence: number}
+    claimB = Column(JSON)
+
+    story = relationship("StoryCluster", back_populates="contradictions_list")
+
+class Article(Base):
+    __tablename__ = "articles"
+
