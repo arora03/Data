@@ -11,3 +11,15 @@ import TimelinePage from "./pages/TimelinePage";
 import ImpactInsightsPage from "./pages/ImpactInsightsPage";
 import SearchQueryPage from "./pages/SearchQueryPage";
 import StoryDetailPage from "./pages/StoryDetailPage";
+import TrendingPage from "./pages/TrendingPage";
+import NotFound from "./pages/NotFound";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
