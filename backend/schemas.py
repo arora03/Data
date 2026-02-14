@@ -24,3 +24,28 @@ class ContradictionSchema(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ArticleSchema(BaseModel):
+    id: str
+    storyId: str
+    headline: str
+    source: str
+    timestamp: str
+    sentiment: str
+    summary: str
+
+    class Config:
+        from_attributes = True
+
+class StoryClusterSchema(BaseModel):
+    id: str
+    title: str
+    summary: str
+    entities: List[str]
+    articleCount: int
+    sentiment: str
+    narrativeCount: int
+    contradictions: int
+    updatedAt: str
+    category: str
+    importance: int
