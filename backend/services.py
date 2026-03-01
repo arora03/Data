@@ -109,3 +109,59 @@ def analyze_cluster_with_gemini(articles: List[dict]) -> dict:
         }}
     }}
     """
+    
+    try:
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        if text.startswith("```json"):
+            text = text[7:-3]
+        elif text.startswith("```"):
+            text = text[3:-3]
+        return json.loads(text)
+    except Exception as e:
+        print(f"Error calling Gemini: {e}")
+        return get_dummy_cluster(articles)
+
+
+def save_cluster_to_db(db: Session, cluster_data: dict, raw_articles: List[dict]):
+    """Save the Gemini JSON structured data into SQLite"""
+    story_id = str(uuid.uuid4())
+    
+    # Base Story Cluster
+    new_story = models.StoryCluster(
+        id=story_id,
+        title=cluster_data.get('title', 'Unknown Topic'),
+        summary=cluster_data.get('summary', ''),
+        entities=cluster_data.get('entities', []),
+        articleCount=len(raw_articles),
+        sentiment=cluster_data.get('sentiment', 'neutral'),
+        narrativeCount=len(cluster_data.get('narratives', [])),
+        contradictions=len(cluster_data.get('contradictions', [])),
+        updatedAt=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        category=cluster_data.get('category', 'Technology'),
+        importance=cluster_data.get('importance', 5),
+        trend=cluster_data.get('trend', 'stable'),
+        sources=list(set(a['source'] for a in raw_articles))
+    )
+    db.add(new_story)
+
+    # Narrative Iteration
+    for nav in cluster_data.get('narratives', []):
+        narrative = models.Narrative(
+            id=str(uuid.uuid4()),
+            storyId=story_id,
+            title=nav.get('title'),
+            summary=nav.get('summary'),
+            sources=nav.get('sources', []),
+            sentiment=nav.get('sentiment', 'neutral'),
+            confidence=nav.get('confidence', 0.5),
+            articleCount=1
+        )
+        db.add(narrative)
+        
+    # Contradictions Iteration
+    for con in cluster_data.get('contradictions', []):
+        contradiction = models.Contradiction(
+            id=str(uuid.uuid4()),
+            storyId=story_id,
+            score=con.get('score', 50),
