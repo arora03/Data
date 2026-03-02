@@ -119,3 +119,63 @@ const DashboardPage = () => {
                       <AlertTriangle className="w-3 h-3" />
                       {story.contradictions}
                     </span>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Two Column: Trending + Timeline */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Trending Topics */}
+          <motion.div className="surface-card p-5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.3 }}>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Trending Topics</h2>
+            <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+              {trendingTopics.map((topic, i) => (
+                <motion.div
+                  key={topic.name}
+                  className="surface-card min-w-[150px] p-3.5 shrink-0 cursor-pointer"
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 + i * 0.04, duration: 0.25 }}
+                >
+                  <div className="text-[10px] text-muted-foreground mb-1 uppercase tracking-wider">{topic.category}</div>
+                  <div className="font-medium text-sm mb-2">{topic.name}</div>
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="font-mono text-muted-foreground">{topic.count}</span>
+                    <span className="text-success flex items-center gap-0.5">
+                      <ArrowUpRight className="w-3 h-3" />
+                      +{topic.change}%
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Activity Timeline */}
+          <motion.div className="surface-card p-5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.3 }}>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">News Activity</h2>
+            <ResponsiveContainer width="100%" height={180}>
+              <AreaChart data={timelineData}>
+                <defs>
+                  <linearGradient id="fillDashboard" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(228 60% 71%)" stopOpacity={0.12} />
+                    <stop offset="100%" stopColor="hsl(228 60% 71%)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(216 14% 14%)" vertical={false} />
+                <XAxis dataKey="date" tick={{ fontSize: 10, fill: "hsl(216 10% 46%)" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: "hsl(216 10% 46%)" }} axisLine={false} tickLine={false} width={30} />
+                <Tooltip
+                  contentStyle={{
+                    background: "hsl(216 24% 10%)",
+                    border: "1px solid hsl(216 14% 14%)",
+                    borderRadius: "6px",
+                    fontSize: "11px",
+                    color: "hsl(216 16% 93%)",
+                    boxShadow: "0 4px 16px -4px rgba(0,0,0,0.3)",
+                  }}
+                />
+                <Area type="monotone" dataKey="articles" stroke="hsl(228 60% 71%)" fill="url(#fillDashboard)" strokeWidth={1.5} dot={false} />
