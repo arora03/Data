@@ -23,3 +23,27 @@ const TopNavbar = () => {
 
   return (
     <header className="h-12 border-b border-border/40 bg-background/80 backdrop-blur-md flex items-center px-5 gap-4 sticky top-0 z-40">
+      {/* Search */}
+      <div className="flex-1 max-w-md">
+        <div className="relative group">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground transition-colors group-focus-within:text-primary" />
+          <input
+            type="text"
+            placeholder="Ask anything about global newsâ€¦"
+            className="w-full h-8 pl-8 pr-4 rounded-md bg-muted/50 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/30 transition-all duration-200"
+          />
+        </div>
+      </div>
+
+      {/* Time Filter */}
+      <div className="flex items-center bg-muted/50 rounded-md p-0.5 border border-border/30">
+        {timeFilters.map((f) => (
+          <button
+            key={f}
+            onClick={() => handleTimeChange(f)}
+            className={`px-2.5 py-1 text-[11px] font-medium rounded transition-all duration-200 ${
+              activeTime === f
+                ? "bg-card text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
