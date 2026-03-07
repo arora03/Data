@@ -64,3 +64,36 @@ def get_all_narratives(db: Session = Depends(get_db)):
     return db.query(models.Narrative).all()
 
 @app.get("/api/contradictions", response_model=List[schemas.ContradictionSchema])
+def get_all_contradictions(db: Session = Depends(get_db)):
+    return db.query(models.Contradiction).all()
+
+@app.get("/api/stories/{story_id}/articles", response_model=List[schemas.ArticleSchema])
+def get_articles(story_id: str, db: Session = Depends(get_db)):
+    return db.query(models.Article).filter(models.Article.storyId == story_id).all()
+
+class SearchRequest(BaseModel):
+    query: str
+
+@app.post("/api/search")
+def search_insights(req: SearchRequest, db: Session = Depends(get_db)):
+    stories = db.query(models.StoryCluster).all()
+    titles = [f"- {s.title}: {s.summary}" for s in stories[:20]]
+    context_str = "\n".join(titles)
+    
+    related_ids = [s.id for s in stories[:2]]
+    narratives_res = ["AI is evolving rapidly", "Regulatory frameworks are lagging"]
+    
+    if GEMINI_API_KEY:
+        try:
+            model = genai.GenerativeModel('models/gemini-flash-latest')
+            prompt = f"""Context covering recent news:\n{context_str}\n\nAnswer the user's question based strictly on the context. If the context is empty or doesn't have the answer, state that. \nUser Question: {req.query}"""
+            res = model.generate_content(prompt)
+            return {
+                "answer": res.text,
+                "narratives": narratives_res,
+                "relatedStories": related_ids
+            }
+        except Exception as e:
+            pass
+            
+    # Fallback
