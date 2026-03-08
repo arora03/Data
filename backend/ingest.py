@@ -18,3 +18,23 @@ TOPICS = [
     },
     {
         "query": '"Ukraine war" OR "Russia Ukraine" OR "NATO Russia" OR "Ukraine aid" OR "Zelensky"',
+        "label": "Russia-Ukraine War"
+    },
+    {
+        "query": '"US China" OR "Taiwan strait" OR "South China Sea" OR "China sanctions" OR "China Taiwan"',
+        "label": "US-China Tensions"
+    },
+    {
+        "query": '"UN Security Council" OR "United Nations" OR "global sanctions" OR "international diplomacy" OR "G20 summit"',
+        "label": "Global Diplomacy"
+    },
+    {
+        "query": '"Iran nuclear" OR "North Korea" OR "Kim Jong" OR "Iran US" OR "nuclear deal"',
+        "label": "Nuclear & Rogue States"
+    },
+]
+
+def run_ingestion():
+    print("Starting multi-topic news ingestion...")
+    db = SessionLocal()
+
