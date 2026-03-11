@@ -60,3 +60,34 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
       <nav className="flex-1 py-4 px-2 space-y-0.5 overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
+          return (
+            <Link key={item.path} to={item.path}>
+              <motion.div
+                className={`sidebar-item relative ${isActive ? "sidebar-item-active" : ""}`}
+                whileTap={{ scale: 0.98 }}
+                title={collapsed ? item.label : undefined}
+              >
+                <item.icon className="w-[17px] h-[17px] shrink-0" />
+                <AnimatePresence>
+                  {!collapsed && (
+                    <motion.span
+                      className="whitespace-nowrap text-[13px]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {item.label}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Bottom */}
+      <div className="py-3 px-2 border-t border-border/30 space-y-0.5">
+        {bottomItems.map((item) => {
+          const isActive = location.pathname === item.path;
