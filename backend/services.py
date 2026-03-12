@@ -165,3 +165,58 @@ def save_cluster_to_db(db: Session, cluster_data: dict, raw_articles: List[dict]
             id=str(uuid.uuid4()),
             storyId=story_id,
             score=con.get('score', 50),
+            explanation=con.get('explanation', ''),
+            claimA=con.get('claimA', {}),
+            claimB=con.get('claimB', {})
+        )
+        db.add(contradiction)
+
+    # Impact
+    impact_dict = cluster_data.get('impact', {})
+    impact = models.ImpactData(
+        storyId=story_id,
+        whyItMatters=impact_dict.get('whyItMatters', ''),
+        whoIsAffected=impact_dict.get('whoIsAffected', ''),
+        futureOutlook=impact_dict.get('futureOutlook', '')
+    )
+    db.add(impact)
+
+    # Raw Articles
+    for art in raw_articles:
+        article = models.Article(
+            id=art['id'],
+            storyId=story_id,
+            headline=art['headline'],
+            source=art['source'],
+            timestamp=art['timestamp'],
+            sentiment='neutral', # can be updated later
+            summary=art['summary']
+        )
+        db.add(article)
+
+    db.commit()
+
+def get_dummy_cluster(articles: List[dict]):
+    """Fallback if API keys are missing"""
+    return {
+        "title": "Fallback Generated Story",
+        "summary": "This is a placeholder summary because API keys are missing.",
+        "entities": ["Tech", "Business"],
+        "sentiment": "neutral",
+        "category": "Technology",
+        "importance": 5,
+        "trend": "stable",
+        "narratives": [],
+        "contradictions": [],
+        "impact": {
+            "whyItMatters": "N/A", "whoIsAffected": "N/A", "futureOutlook": "N/A"
+        }
+    }
+
+# [Stage 25% | Commit 10 | 2026-03-24 23:33]
+
+# [Stage 50% | Commit 15 | 2026-03-24 23:33]
+
+# [Stage 75% | Commit 21 | 2026-03-24 23:33]
+
+# [Stage 100% | Commit 32 | 2026-03-24 23:34]
