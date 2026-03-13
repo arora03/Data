@@ -47,3 +47,28 @@ const TopNavbar = () => {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {/* Source Filter */}
+      <select
+        value={activeSource}
+        onChange={(e) => handleSourceChange(e.target.value)}
+        className="h-7 px-2.5 text-[11px] rounded-md bg-muted/50 border border-border/30 text-foreground focus:outline-none cursor-pointer"
+      >
+        {sourceFilters.map((s) => (
+          <option key={s} value={s}>{s}</option>
+        ))}
+      </select>
+
+      {/* Theme Toggle */}
+      <motion.button
+        onClick={toggle}
+        className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+        whileTap={{ scale: 0.92 }}
+        transition={{ duration: 0.2 }}
+      >
+        {theme === "dark" ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+      </motion.button>
