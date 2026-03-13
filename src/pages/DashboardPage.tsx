@@ -179,3 +179,63 @@ const DashboardPage = () => {
                   }}
                 />
                 <Area type="monotone" dataKey="articles" stroke="hsl(228 60% 71%)" fill="url(#fillDashboard)" strokeWidth={1.5} dot={false} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </motion.div>
+        </div>
+
+        {/* Global Activity Heatmap */}
+        <motion.div className="surface-card p-5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.3 }}>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">Global Activity</h2>
+          <p className="text-[11px] text-muted-foreground mb-5">News intensity by region</p>
+          <svg viewBox="0 0 700 340" className="w-full h-[260px]">
+            <rect x="0" y="0" width="700" height="340" fill="transparent" />
+            {heatmapData.map((region, i) => (
+              <g key={region.region}>
+                <motion.circle
+                  cx={region.x} cy={region.y}
+                  r={25 + region.intensity * 16}
+                  fill="hsl(228 60% 71%)"
+                  opacity={region.intensity * 0.06}
+                  initial={{ r: 0, opacity: 0 }}
+                  animate={{ r: 25 + region.intensity * 16, opacity: region.intensity * 0.06 }}
+                  transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+                />
+                <motion.circle
+                  cx={region.x} cy={region.y}
+                  r={3 + region.intensity * 3}
+                  fill="hsl(228 60% 71%)"
+                  opacity={0.5}
+                  initial={{ r: 0 }}
+                  animate={{ r: 3 + region.intensity * 3 }}
+                  transition={{ delay: 0.4 + i * 0.06, duration: 0.4 }}
+                  className="cursor-pointer"
+                />
+                <text
+                  x={region.x} y={region.y - 12 - region.intensity * 6}
+                  textAnchor="middle" fill="hsl(216 16% 93%)" fontSize="10" fontWeight="500"
+                  className="pointer-events-none select-none" opacity="0.6"
+                >{region.region}</text>
+                <text
+                  x={region.x} y={region.y - region.intensity * 6}
+                  textAnchor="middle" fill="hsl(216 10% 46%)" fontSize="9"
+                  className="pointer-events-none select-none font-mono"
+                >{region.articles} articles</text>
+              </g>
+            ))}
+          </svg>
+        </motion.div>
+      </div>
+    </AppShell>
+  );
+};
+
+export default DashboardPage;
+
+// [Stage 25% | Commit 11 | 2026-03-24 23:33]
+
+// [Stage 50% | Commit 17 | 2026-03-24 23:33]
+
+// [Stage 75% | Commit 22 | 2026-03-24 23:33]
+
+// [Stage 100% | Commit 33 | 2026-03-24 23:34]
