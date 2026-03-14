@@ -109,3 +109,59 @@ const StoryDetailPage = () => {
             <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">Contradictions</h2>
             <p className="text-[11px] text-muted-foreground mb-4">Conflicting claims detected by AI</p>
             <div className="space-y-3">
+              {storyContradictions.map((c, i) => (
+                <motion.div
+                  key={c.id}
+                  className="surface-card p-4"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.16 + i * 0.04, duration: 0.25 }}
+                >
+                  <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-start">
+                    <div>
+                      <span className="badge-positive mb-2 inline-block">Claim A</span>
+                      <p className="text-sm">"{c.claimA.text}"</p>
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {c.claimA.sources.map((s) => (
+                          <span key={s} className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center pt-4">
+                      <div className="w-9 h-9 rounded-full border border-destructive/30 flex items-center justify-center">
+                        <span className="text-[11px] font-semibold font-mono text-destructive">{c.score}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="badge-negative mb-2 inline-block">Claim B</span>
+                      <p className="text-sm">"{c.claimB.text}"</p>
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {c.claimB.sources.map((s) => (
+                          <span key={s} className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-border/30 text-xs text-muted-foreground">
+                    <Zap className="w-3 h-3 inline mr-1 text-primary" />
+                    {c.explanation}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Impact */}
+        {impact && (
+          <motion.div className="surface-card overflow-hidden" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.25 }}>
+            <div className="p-5 border-b border-border/30">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Impact Analysis</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/30">
+              {[
+                { icon: Globe, title: "Why It Matters", text: impact.whyItMatters, color: "text-primary" },
+                { icon: DollarSign, title: "Who Is Affected", text: impact.whoIsAffected, color: "text-warning" },
+                { icon: Eye, title: "Future Outlook", text: impact.futureOutlook, color: "text-accent" },
+              ].map((s) => (
+                <div key={s.title} className="p-5">
