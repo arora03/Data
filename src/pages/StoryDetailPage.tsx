@@ -165,3 +165,58 @@ const StoryDetailPage = () => {
                 { icon: Eye, title: "Future Outlook", text: impact.futureOutlook, color: "text-accent" },
               ].map((s) => (
                 <div key={s.title} className="p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <s.icon className={`w-3.5 h-3.5 ${s.color}`} />
+                    <span className="text-sm font-medium">{s.title}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{s.text}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Articles */}
+        <motion.div className="surface-card p-5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24, duration: 0.25 }}>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Related Articles</h2>
+          <div className="space-y-1.5">
+            {storyArticles.map((article, i) => {
+              const barColor = article.sentiment === "positive" ? "bg-success" : article.sentiment === "negative" ? "bg-destructive" : "bg-primary";
+              return (
+                <motion.div
+                  key={article.id}
+                  className="surface-card p-3.5 flex items-start gap-3 group"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.28 + i * 0.03, duration: 0.25 }}
+                >
+                  <div className={`w-0.5 self-stretch rounded-full ${barColor}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-0.5">
+                      <span className="font-medium">{article.source}</span>
+                      <span>Â·</span>
+                      <span>{article.timestamp}</span>
+                    </div>
+                    <h4 className="text-sm font-medium group-hover:text-primary transition-colors duration-200">{article.headline}</h4>
+                    <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{article.summary}</p>
+                  </div>
+                  <ExternalLink className="w-3 h-3 text-muted-foreground shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </div>
+    </AppShell>
+  );
+};
+
+export default StoryDetailPage;
+
+// [Stage 25% | Commit 26 | 2026-03-24 23:33]
+
+// [Stage 50% | Commit 29 | 2026-03-24 23:33]
+
+// [Stage 75% | Commit 36 | 2026-03-24 23:34]
+
+// [Stage 100% | Commit 39 | 2026-03-24 23:34]
