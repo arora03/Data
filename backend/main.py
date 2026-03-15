@@ -97,3 +97,35 @@ def search_insights(req: SearchRequest, db: Session = Depends(get_db)):
             pass
             
     # Fallback
+    return {
+        "answer": f"Based on the knowledge base of {len(stories)} recent events, '{req.query}' relates heavily to the ongoing developments in the technology sector.",
+        "narratives": narratives_res,
+        "relatedStories": related_ids
+    }
+
+@app.get("/api/stories/{story_id}/impact", response_model=schemas.ImpactDataSchema)
+def get_impact(story_id: str, db: Session = Depends(get_db)):
+    impact =  db.query(models.ImpactData).filter(models.ImpactData.storyId == story_id).first()
+    if not impact:
+        raise HTTPException(status_code=404, detail="Impact data not found")
+    return impact
+
+@app.get("/api/analytics/timeline", response_model=List[schemas.TimelinePointSchema])
+def get_timeline(db: Session = Depends(get_db)):
+    return db.query(models.TimelinePoint).all()
+
+@app.get("/api/analytics/trending", response_model=List[schemas.TrendingTopicSchema])
+def get_trending(db: Session = Depends(get_db)):
+    return db.query(models.TrendingTopic).all()
+
+@app.get("/api/analytics/heatmap", response_model=List[schemas.GeographicHeatmapSchema])
+def get_heatmap(db: Session = Depends(get_db)):
+    return db.query(models.GeographicHeatmap).all()
+
+# [Stage 25% | Commit 18 | 2026-03-24 23:33]
+
+# [Stage 50% | Commit 23 | 2026-03-24 23:33]
+
+# [Stage 75% | Commit 27 | 2026-03-24 23:33]
+
+# [Stage 100% | Commit 37 | 2026-03-24 23:34]
