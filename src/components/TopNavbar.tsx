@@ -72,3 +72,27 @@ const TopNavbar = () => {
       >
         {theme === "dark" ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
       </motion.button>
+
+      {/* Notifications */}
+      <button className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors relative">
+        <Bell className="w-3.5 h-3.5" />
+        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-destructive rounded-full" />
+      </button>
+
+      {/* Avatar */}
+      <div className="w-7 h-7 rounded-md bg-muted border border-border/40 flex items-center justify-center">
+        <User className="w-3.5 h-3.5 text-muted-foreground" />
+      </div>
+    </header>
+  );
+};
+
+export default TopNavbar;
+
+// [Stage 25% | Commit 13 | 2026-03-24 23:33]
+
+// [Stage 50% | Commit 25 | 2026-03-24 23:33]
+
+// [Stage 75% | Commit 34 | 2026-03-24 23:34]
+
+// [Stage 100% | Commit 41 | 2026-03-24 23:34]
