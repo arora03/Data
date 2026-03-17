@@ -58,3 +58,22 @@ def run_ingestion():
         
         # 4. Save to DB
         try:
+            save_cluster_to_db(db, cluster_data, raw_articles)
+            print(f"  Saved story: {cluster_data.get('title', topic['label'])}")
+        except Exception as e:
+            print(f"  Error saving cluster for {topic['label']}: {e}")
+            db.rollback()
+    
+    db.close()
+    print("\nIngestion complete! All topics processed.")
+
+if __name__ == "__main__":
+    run_ingestion()
+
+# [Stage 25% | Commit 20 | 2026-03-24 23:33]
+
+# [Stage 50% | Commit 28 | 2026-03-24 23:33]
+
+# [Stage 75% | Commit 35 | 2026-03-24 23:34]
+
+# [Stage 100% | Commit 42 | 2026-03-24 23:34]
