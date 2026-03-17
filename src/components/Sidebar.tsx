@@ -91,3 +91,34 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
       <div className="py-3 px-2 border-t border-border/30 space-y-0.5">
         {bottomItems.map((item) => {
           const isActive = location.pathname === item.path;
+          return (
+            <Link key={item.path} to={item.path}>
+              <div className={`sidebar-item relative ${isActive ? "sidebar-item-active" : ""}`} title={collapsed ? item.label : undefined}>
+                <item.icon className="w-[17px] h-[17px] shrink-0" />
+                {!collapsed && <span className="whitespace-nowrap text-[13px]">{item.label}</span>}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Collapse Toggle */}
+      <button
+        onClick={onToggle}
+        className="absolute -right-3 top-20 w-5 h-5 rounded-full bg-card border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors z-30"
+      >
+        {collapsed ? <ChevronRight className="w-2.5 h-2.5" /> : <ChevronLeft className="w-2.5 h-2.5" />}
+      </button>
+    </motion.aside>
+  );
+};
+
+export default Sidebar;
+
+// [Stage 25% | Commit 5 | 2026-03-24 23:33]
+
+// [Stage 50% | Commit 19 | 2026-03-24 23:33]
+
+// [Stage 75% | Commit 31 | 2026-03-24 23:33]
+
+// [Stage 100% | Commit 43 | 2026-03-24 23:34]
