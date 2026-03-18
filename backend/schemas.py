@@ -49,3 +49,28 @@ class StoryClusterSchema(BaseModel):
     updatedAt: str
     category: str
     importance: int
+    trend: str
+    sources: List[str]
+
+    class Config:
+        from_attributes = True
+
+class TimelinePointSchema(BaseModel):
+    date: str
+    articles: int
+    stories: int
+    contradictions: int
+    label: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+class TrendingTopicSchema(BaseModel):
+    name: str
+    count: int
+    change: int
+    category: str
+
+    class Config:
+        from_attributes = True
+
