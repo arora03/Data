@@ -53,3 +53,31 @@ class Contradiction(Base):
 class Article(Base):
     __tablename__ = "articles"
 
+    id = Column(String, primary_key=True, index=True)
+    storyId = Column(String, ForeignKey("story_clusters.id"))
+    headline = Column(String)
+    source = Column(String)
+    timestamp = Column(String)
+    sentiment = Column(String)
+    summary = Column(String)
+
+    story = relationship("StoryCluster", back_populates="articles")
+
+class TimelinePoint(Base):
+    __tablename__ = "timeline_points"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    date = Column(String, unique=True, index=True)
+    articles = Column(Integer)
+    stories = Column(Integer)
+    contradictions = Column(Integer)
+    label = Column(String, nullable=True)
+
+class TrendingTopic(Base):
+    __tablename__ = "trending_topics"
+
+    name = Column(String, primary_key=True, index=True)
+    count = Column(Integer)
+    change = Column(Integer)
+    category = Column(String)
+
