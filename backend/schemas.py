@@ -74,3 +74,28 @@ class TrendingTopicSchema(BaseModel):
     class Config:
         from_attributes = True
 
+class ImpactDataSchema(BaseModel):
+    whyItMatters: str
+    whoIsAffected: str
+    futureOutlook: str
+
+    class Config:
+        from_attributes = True
+
+class GeographicHeatmapSchema(BaseModel):
+    region: str
+    x: int
+    y: int
+    intensity: float
+    articles: int
+
+    class Config:
+        from_attributes = True
+
+# [Stage 25% | Commit 6 | 2026-03-24 23:33]
+
+# [Stage 50% | Commit 14 | 2026-03-24 23:33]
+
+# [Stage 75% | Commit 45 | 2026-03-24 23:34]
+
+# [Stage 100% | Commit 47 | 2026-03-24 23:34]
