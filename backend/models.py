@@ -81,3 +81,30 @@ class TrendingTopic(Base):
     change = Column(Integer)
     category = Column(String)
 
+class ImpactData(Base):
+    __tablename__ = "impact_data"
+
+    storyId = Column(String, ForeignKey("story_clusters.id"), primary_key=True)
+    whyItMatters = Column(String)
+    whoIsAffected = Column(String)
+    futureOutlook = Column(String)
+
+    story = relationship("StoryCluster", back_populates="impact")
+
+class GeographicHeatmap(Base):
+    __tablename__ = "geographic_heatmap"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    region = Column(String)
+    x = Column(Integer)
+    y = Column(Integer)
+    intensity = Column(Float)
+    articles = Column(Integer)
+
+# [Stage 25% | Commit 2 | 2026-03-24 23:33]
+
+# [Stage 50% | Commit 8 | 2026-03-24 23:33]
+
+# [Stage 75% | Commit 44 | 2026-03-24 23:34]
+
+# [Stage 100% | Commit 46 | 2026-03-24 23:34]
