@@ -23,3 +23,27 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/trending" element={<TrendingPage />} />
+            <Route path="/narratives" element={<NarrativeExplorerPage />} />
+            <Route path="/contradictions" element={<ContradictionMapPage />} />
+            <Route path="/timeline" element={<TimelinePage />} />
+            <Route path="/insights" element={<ImpactInsightsPage />} />
+            <Route path="/search" element={<SearchQueryPage />} />
+            <Route path="/story/:id" element={<StoryDetailPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
+);
+
+export default App;
+
+// [Stage 25% | Commit 3 | 2026-03-24 23:33]
+
+// [Stage 50% | Commit 9 | 2026-03-24 23:33]
+
+// [Stage 100% | Commit 48 | 2026-03-24 23:34]
