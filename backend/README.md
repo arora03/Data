@@ -1,4 +1,4 @@
-# Nexus Insights Backend
+#INFERA Backend
 
 This is the Python backend that powers the Nexus Insights dashboard. It uses **FastAPI**, **SQLite**, **ChromaDB**, **Gemini 1.5 Flash**, and **NewsAPI**.
 
